@@ -5,6 +5,13 @@ fun String.getXMLValue(key: String): String {
     return after.substringBefore(key.xmlKeyifyNegated())
 }
 
+fun String.getXMLValue(key: String, default: String): String {
+    val result = this.getXMLValue(key)
+    if (result == "") return default
+
+    return result
+}
+
 fun String.getListXMLValues(key: String): List<String> {
     val trimmed = key.xmlKeyify() + this.substringAfter(key.xmlKeyify()).substringBeforeLast(key.xmlKeyifyNegated()) + key.xmlKeyifyNegated()
     val splits = trimmed.split(key.xmlKeyify()).filter { it != "" }.map { key.xmlKeyify() + it }
