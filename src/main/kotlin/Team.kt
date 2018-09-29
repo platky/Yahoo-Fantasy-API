@@ -24,6 +24,7 @@ fun createTeamFromXML(xml: String): Team {
             xml.getXMLValue("url"),
             xml.getXMLValue("team_logos").getXMLValue("url"),
             xml.getXMLValue("waiver_priority"),
+
     )
 }
 
