@@ -4,14 +4,14 @@ import com.github.scribejava.core.model.*
 import com.github.scribejava.core.oauth.OAuth20Service
 
 class OAuth(private val apiKey: String, private val apiSecret: String) {
-    val service: OAuth20Service = ServiceBuilder(apiKey)
+    private val service: OAuth20Service = ServiceBuilder(apiKey)
             .apiSecret(apiSecret)
             .callback(OAuthConstants.OOB)
             .build(YahooApi20.instance())
 
     private var accessToken: OAuth2AccessToken? = null
 
-    internal fun startAuthorization() : AuthenticationResult {
+    internal fun startAuthentication() : AuthenticationResult {
         if (accessToken != null) return CodedAuthenticationResult(200, "Already authenticated")
 
         val accessTokenRaw = PropertiesHelper.getProperty("accessToken")
@@ -25,7 +25,7 @@ class OAuth(private val apiKey: String, private val apiSecret: String) {
             return authenticationResult
 
         resetAuthentication()
-        return startAuthorization() //This pass will require user token
+        return startAuthentication() //This pass will require user token
     }
 
     internal fun sendUserToken(token: String) : AuthenticationResult {

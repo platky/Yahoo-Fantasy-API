@@ -7,18 +7,18 @@ private val secret = "acbe7d4e780aa74b0307efbb5999fc1321be149c"
 fun main(args: Array<String>) {
     val yahooFantasy = YahooFantasy(apiKey, secret)
     //println(PropertiesHelper.getProperty("token"))
-    var response = yahooFantasy.startAuthorization()
+    var response = yahooFantasy.startAuthentication()
     if (response is AuthorizationResult) {
         println(response.url)
         val scanner = Scanner(System.`in`)
         val input = scanner.nextLine()
-        response = yahooFantasy.sendUserAuthorizationToken(input)
+        response = yahooFantasy.sendUserAuthenticationToken(input)
     }
 
     if (!response.isSuccessful())
         throw Exception("Not authorized")
 
-    //yahooFantasy.getGameData()
-    //yahooFantasy.populateLeagueData()
-    yahooFantasy.populateTeamData()
+    val game = yahooFantasy.game
+    val leagues = yahooFantasy.usersLeagues
+    val teams = yahooFantasy.usersTeams
 }

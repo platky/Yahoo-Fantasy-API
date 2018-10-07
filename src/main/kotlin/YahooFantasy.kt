@@ -1,37 +1,22 @@
-
-
 class YahooFantasy(apiKey: String, apiSecret: String) {
-    val oAuth = OAuth(apiKey, apiSecret)
+    private val oAuth = OAuth(apiKey, apiSecret)
 
-    fun startAuthorization() = oAuth.startAuthorization()
-    fun sendUserAuthorizationToken(token: String) = oAuth.sendUserToken(token)
-    fun resetAuth() = oAuth.resetAuthentication()
-
-    fun getGameData() {
+    val game: Game by lazy {
         val response = oAuth.sendRequest(Requests.getGame(GameName.HOCKEY))
-        println(response.code)
-        println()
-        println(response.body)
-        var gameXML = "<game>" + response.body.substringAfter("<game>")
-        gameXML = gameXML.substringBefore("</game>") + "</game>"
-        val game = createGameFromXML(gameXML)
-        println(game.toString())
+        createGameFromXML(response.body.getXMLValue("game"))
     }
 
-    fun populateLeagueData() {
+    val usersLeagues: List<League> by lazy {
         val response = oAuth.sendRequest(Requests.getUsersLeagues(GameName.HOCKEY))
-        println(response.code)
-        println()
-        println(response.body)
-        val allLeagueXML = response.body.getListXMLValues("league")
-        val leagues = createLeaguesFromXML(allLeagueXML)
-        println(leagues)
+        createLeaguesFromXML(response.body.getListXMLValues("league"))
     }
 
-    fun populateTeamData() {
+    val usersTeams: List<Team> by lazy {
         val response = oAuth.sendRequest(Requests.getUsersTeams(GameName.HOCKEY))
-        println(response.code)
-        println()
-        println(response.body)
+        createTeamsFromXML(response.body.getListXMLValues("team"))
     }
+
+    fun startAuthentication() = oAuth.startAuthentication()
+    fun sendUserAuthenticationToken(token: String) = oAuth.sendUserToken(token)
+    fun resetAuthentication() = oAuth.resetAuthentication()
 }

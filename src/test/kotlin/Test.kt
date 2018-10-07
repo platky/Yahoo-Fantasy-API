@@ -9,7 +9,5 @@ class Test {
 
     @Test
     fun mainTest() {
-        val yahooFantasy = YahooFantasy(apiKey, secret)
-        yahooFantasy.authorize()
     }
 }
