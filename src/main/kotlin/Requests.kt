@@ -1,21 +1,30 @@
+import data.Sport
+
 object Requests {
     private const val ANONYMOUS_BASE = "https://fantasysports.yahooapis.com/fantasy/v2"
     const val BASE = "$ANONYMOUS_BASE/users;use_login=1"
 
-    fun getGame(gameName: GameName) = "$ANONYMOUS_BASE/game/${gameName.code}"
+    fun getGame(sport: Sport) = "$ANONYMOUS_BASE/game/${sport.code}"
+    fun getGames(gameKeys: List<String>) = "$ANONYMOUS_BASE/games;game_keys=${gameKeys.combine()}"
 
-    //TODO offer multiple input types instead of just list. vararg, or singular
-    fun getLeagues(leagueKeys: List<String>) = "$ANONYMOUS_BASE/leagues;league_keys=${leagueKeys.joinToString(",")}"
-
-    fun getLeagueForUser(gameName: GameName) = "$BASE/games;game_keys=${gameName.code}/usersLeagues"
+    fun getLeagues(leagueKeys: List<String>) = "$ANONYMOUS_BASE/leagues;league_keys=${leagueKeys.combine()}"
+    fun getLeaguesForUser(sport: Sport) = "$BASE/games;game_keys=${sport.code}/leagues"
 
     fun getTeamsFromLeague(leagueKey: String) = "$ANONYMOUS_BASE/league/$leagueKey/teams"
-    fun getTeams(teamKeys: List<String>) = "$ANONYMOUS_BASE/teams;${teamKeys.joinToString(",")}"
-    fun getTeamsForUser(gameName: GameName) = "$BASE/games;game_keys=${gameName.code}/usersTeams"
+    fun getTeams(teamKeys: List<String>) = "$ANONYMOUS_BASE/teams;${teamKeys.combine()}"
+    fun getTeamsForUser(sport: Sport) = "$BASE/games;game_keys=${sport.code}/teams"
 
     fun getRoster(teamKey: String) = "$ANONYMOUS_BASE/team/$teamKey/roster/players"
 
-    fun getPlayersFromLeagues(leagueKeys: List<String>) = "$ANONYMOUS_BASE/league/${leagueKeys.joinToString(",")}/players"
-    fun getPlayersFromTeam
-    fun getPlayers
+    fun getPlayersFromLeagues(leagueKeys: List<String>) =
+            "$ANONYMOUS_BASE/leagues;league_keys=${leagueKeys.combine()}/players"
+    fun getPlayersFromTeams(teamKeys: List<String>) = "$ANONYMOUS_BASE/teams;team_keys=${teamKeys.combine()}/players"
+    fun getPlayers(playerKeys: List<String>) = "$ANONYMOUS_BASE/players;player_keys=${playerKeys.combine()}"
+
+    fun getTransactionsFromLeagues(leagueKeys: List<String>) =
+            "$ANONYMOUS_BASE/leagues;league_keys=${leagueKeys.combine()}/transactions"
+    fun getTransactions(transactionKeys: List<String>) =
+            "$ANONYMOUS_BASE/transactions;transaction_keys=${transactionKeys.combine()}"
+
+    private fun List<String>.combine() = this.joinToString(",")
 }

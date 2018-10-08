@@ -1,3 +1,11 @@
+package data
+
+import OAuth
+import Requests
+import YAHOO_DATE_FORMAT
+import getListXMLValues
+import getXMLValue
+import yahooToBoolean
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -47,7 +55,7 @@ data class League(
         val seasonYear: Int
 )
 
-fun createLeagueFromXML(xml: String): League {
+internal fun createLeagueFromXML(xml: String): League {
     return League(
             xml.getXMLValue("league_key"),
             xml.getXMLValue("league_id").toInt(),
@@ -76,6 +84,16 @@ fun createLeagueFromXML(xml: String): League {
     )
 }
 
-fun createLeaguesFromXML(xmlBlocks: List<String>): List<League> {
+internal fun createLeaguesFromXML(xmlBlocks: List<String>): List<League> {
     return xmlBlocks.map { createLeagueFromXML(it) }
+}
+
+internal fun retrieveLeagues(oAuth: OAuth, leagueKeys: List<String>): List<League> {
+    val response = oAuth.sendRequest(Requests.getLeagues(leagueKeys))
+    return createLeaguesFromXML(response.body.getListXMLValues("league"))
+}
+
+internal fun retrieveUsersLeagues(oAuth: OAuth, sport: Sport): List<League> {
+    val response = oAuth.sendRequest(Requests.getLeaguesForUser(sport))
+    return createLeaguesFromXML(response.body.getListXMLValues("league"))
 }

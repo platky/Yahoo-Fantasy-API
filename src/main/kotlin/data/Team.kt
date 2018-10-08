@@ -1,4 +1,10 @@
+package data
 
+import OAuth
+import Requests
+import getListXMLValues
+import getXMLValue
+import yahooToBoolean
 
 data class Team(val key: String,
                 val id: Int,
@@ -26,12 +32,27 @@ fun createTeamFromXML(xml: String): Team {
             xml.getXMLValue("waiver_priority").toInt(),
             xml.getXMLValue("number_of_moves").toInt(),
             xml.getXMLValue("number_of_trades").toInt(),
-            xml.getXMLValue("has_clinched_playoffs", "0").yahooToBoolean(),
+            xml.getXMLValue("has_clinched_playoffs", "0")!!.yahooToBoolean(),
             ScoringType.fromName(xml.getXMLValue("scoring_type")),
             xml.getXMLValue("has_draft_grade").yahooToBoolean()
     )
 }
 
-fun createTeamsFromXML(xmlBlocks: List<String>): List<Team> {
+internal fun createTeamsFromXML(xmlBlocks: List<String>): List<Team> {
     return xmlBlocks.map { createTeamFromXML(it) }
+}
+
+internal fun retrieveTeams(oAuth: OAuth, teamKeys: List<String>): List<Team> {
+    val response = oAuth.sendRequest(Requests.getTeams(teamKeys))
+    return createTeamsFromXML(response.body.getListXMLValues("team"))
+}
+
+internal fun retrieveUsersTeams(oAuth: OAuth, sport: Sport): List<Team> {
+    val response = oAuth.sendRequest(Requests.getTeamsForUser(sport))
+    return createTeamsFromXML(response.body.getListXMLValues("team"))
+}
+
+internal fun retrieveLeaguesTeams(oAuth: OAuth, leagueKey: String): List<Team> {
+    val response = oAuth.sendRequest(Requests.getTeamsFromLeague(leagueKey))
+    return createTeamsFromXML(response.body.getListXMLValues("team"))
 }

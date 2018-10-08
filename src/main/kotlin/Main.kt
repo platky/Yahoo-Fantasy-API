@@ -18,7 +18,6 @@ fun main(args: Array<String>) {
     if (!response.isSuccessful())
         throw Exception("Not authorized")
 
-    val game = yahooFantasy.game
-    val leagues = yahooFantasy.usersLeagues
-    val teams = yahooFantasy.usersTeams
+    val league = yahooFantasy.getUsersLeagues()
+    yahooFantasy.getLeaguesTransactions(league[0].key)
 }

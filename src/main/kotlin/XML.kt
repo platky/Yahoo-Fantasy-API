@@ -5,7 +5,7 @@ fun String.getXMLValue(key: String): String {
     return after.substringBefore(key.xmlKeyifyNegated())
 }
 
-fun String.getXMLValue(key: String, default: String): String {
+fun String.getXMLValue(key: String, default: String?): String? {
     val result = this.getXMLValue(key)
     if (result == "") return default
 
