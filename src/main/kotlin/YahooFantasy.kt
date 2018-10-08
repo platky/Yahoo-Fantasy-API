@@ -7,12 +7,12 @@ class YahooFantasy(apiKey: String, apiSecret: String) {
     }
 
     val usersLeagues: List<League> by lazy {
-        val response = oAuth.sendRequest(Requests.getUsersLeagues(GameName.HOCKEY))
+        val response = oAuth.sendRequest(Requests.getLeagueForUser(GameName.HOCKEY))
         createLeaguesFromXML(response.body.getListXMLValues("league"))
     }
 
     val usersTeams: List<Team> by lazy {
-        val response = oAuth.sendRequest(Requests.getUsersTeams(GameName.HOCKEY))
+        val response = oAuth.sendRequest(Requests.getTeamsForUser(GameName.HOCKEY))
         createTeamsFromXML(response.body.getListXMLValues("team"))
     }
 
