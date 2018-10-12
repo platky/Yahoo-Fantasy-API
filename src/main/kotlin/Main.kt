@@ -5,9 +5,12 @@ private val apiKey = "dj0yJmk9WVB3dTRhNEE5YXk5JmQ9WVdrOVZGZ3piRE5FTmpJbWNHbzlNQS
 private val secret = "acbe7d4e780aa74b0307efbb5999fc1321be149c"
 
 fun main(args: Array<String>) {
+    val at = PreferenceHelper.getProperty("accessToken") ?: ""
+    val refresh = PreferenceHelper.getProperty("refreshToken") ?: ""
+
     val yahooFantasy = YahooFantasy(apiKey, secret)
-    //println(PropertiesHelper.getProperty("token"))
-    var response = yahooFantasy.startAuthentication()
+    //println(PreferenceHelper.getProperty("token"))
+    var response = yahooFantasy.startAuthentication(at, refresh)
     if (response is AuthorizationResult) {
         println(response.url)
         val scanner = Scanner(System.`in`)
@@ -18,6 +21,11 @@ fun main(args: Array<String>) {
     if (!response.isSuccessful())
         throw Exception("Not authorized")
 
+    if (response is CodedAuthenticationResult) {
+        println(response.accessToken)
+        println(response.refreshToken)
+    }
+
     val league = yahooFantasy.getUsersLeagues()
-    yahooFantasy.getLeaguesTransactions(league[0].key)
+    val transactions = yahooFantasy.getLeaguesTransactions(league[0].key)
 }

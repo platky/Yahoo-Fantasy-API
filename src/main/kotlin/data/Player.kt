@@ -8,7 +8,7 @@ import yahooToBoolean
 
 data class Player (
         val key: String,
-        val id: Int,
+        val id: Int?,
         val firstName: String,
         val lastName: String,
         val status: String, //TODO Enum
@@ -18,7 +18,7 @@ data class Player (
         val editorialTeamKey: String,
         val teamName: String,
         val teamAbbreviation: String,
-        val uniformNumber: Int,
+        val uniformNumber: Int?,
         val position: String, //TODO Enum
         val headshotUrl: String,
         val isDroppable: Boolean, //Negated from Yahoo
@@ -33,7 +33,7 @@ data class Player (
 internal fun createPlayerFromXML(xml: String): Player {
     return Player(
             xml.getXMLValue("player_key"),
-            xml.getXMLValue("player_id").toInt(),
+            xml.getXMLValue("player_id", null)?.toInt(),
             xml.getXMLValue("first"),
             xml.getXMLValue("last"),
             xml.getXMLValue("status"),
@@ -43,7 +43,7 @@ internal fun createPlayerFromXML(xml: String): Player {
             xml.getXMLValue("editorial_team_key"),
             xml.getXMLValue("editorial_team_full_name"),
             xml.getXMLValue("editorial_team_abbr"),
-            xml.getXMLValue("uniform_number").toInt(),
+            xml.getXMLValue("uniform_number", null)?.toInt(),
             xml.getXMLValue("display_position"),
             xml.getXMLValue("image_url"),
             !xml.getXMLValue("is_undroppable").yahooToBoolean(),

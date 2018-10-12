@@ -11,18 +11,23 @@ data class Transaction(
         val type: String, //TODO Enum
         val status: String, //TODO Enum
         val timestamp: String,
-        val players: List<Pair<Player, TransactionData>>
+        val players: List<Pair<Player, TransactionData>>?
 )
 
 internal fun createTransactionFromXML(xml: String): Transaction {
+    val type = xml.getXMLValue("type")
     return Transaction(
             xml.getXMLValue("transaction_key"),
             xml.getXMLValue("transaction_id").toInt(),
-            xml.getXMLValue("type"),
+            type,
             xml.getXMLValue("status"),
             xml.getXMLValue("timestamp"),
-            xml.getListXMLValues("player").map {
-                Pair(createPlayerFromXML(it), createTransactionDataFromXML(it.getXMLValue("transaction_data")))
+            if (type != "commish") {
+                xml.getListXMLValues("player").map {
+                    Pair(createPlayerFromXML(it), createTransactionDataFromXML(it.getXMLValue("transaction_data")))
+                }
+            } else {
+                null
             }
     )
 }

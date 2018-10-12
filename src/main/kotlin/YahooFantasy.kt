@@ -27,7 +27,8 @@ class YahooFantasy(apiKey: String, apiSecret: String) {
     fun getTransaction(transactionKey: String): Transaction = retrieveTransactions(oAuth, listOf(transactionKey))[0]
     fun getTransactions(transactionKeys: List<String>): List<Transaction> = retrieveTransactions(oAuth, transactionKeys)
 
-    fun startAuthentication() = oAuth.startAuthentication()
+    fun startAuthentication(accessToken: String = "", refreshToken: String = "") =
+            oAuth.startAuthentication(accessToken, refreshToken)
     fun sendUserAuthenticationToken(token: String) = oAuth.sendUserToken(token)
     fun resetAuthentication() = oAuth.resetAuthentication()
 }

@@ -11,30 +11,21 @@ class OAuth(private val apiKey: String, private val apiSecret: String) {
 
     private var accessToken: OAuth2AccessToken? = null
 
-    internal fun startAuthentication() : AuthenticationResult {
-        if (accessToken != null) return CodedAuthenticationResult(200, "Already authenticated")
-
-        val accessTokenRaw = PropertiesHelper.getProperty("accessToken")
-
-        if (accessTokenRaw == null)
+    internal fun startAuthentication(accessToken: String = "", refreshToken: String = "") : AuthenticationResult {
+        if (accessToken == "")
             return AuthorizationResult(service.authorizationUrl)
 
-        accessToken = OAuth2AccessToken(accessTokenRaw)
+        this.accessToken = OAuth2AccessToken(accessToken, "", 3600, refreshToken, "", "")
         val authenticationResult = finishAuthentication()
         if (authenticationResult.isSuccessful())
             return authenticationResult
 
         resetAuthentication()
-        return startAuthentication() //This pass will require user token
+        return startAuthentication()
     }
 
     internal fun sendUserToken(token: String) : AuthenticationResult {
         accessToken = service.getAccessToken(token)
-        PropertiesHelper.setProperty("token", token)
-        PropertiesHelper.setProperty("rawResponse", accessToken!!.rawResponse) //TODO synchronize
-        PropertiesHelper.setProperty("refreshToken", accessToken!!.refreshToken)
-        PropertiesHelper.setProperty("accessToken", accessToken!!.accessToken)
-
         return finishAuthentication()
     }
 
@@ -42,10 +33,11 @@ class OAuth(private val apiKey: String, private val apiSecret: String) {
         val request = OAuthRequest(Verb.GET, Requests.BASE)
         service.signRequest(accessToken, request)
         val result = service.execute(request)
-        return CodedAuthenticationResult(result.code, result.message)
+        return CodedAuthenticationResult(result.code, result.message,
+                accessToken!!.accessToken, accessToken!!.refreshToken)
     }
 
-    fun sendRequest(requestUrl: String): Response {
+    internal fun sendRequest(requestUrl: String): Response {
         val request = OAuthRequest(Verb.GET, requestUrl)
         service.signRequest(accessToken, request)
 
@@ -54,8 +46,5 @@ class OAuth(private val apiKey: String, private val apiSecret: String) {
 
     internal fun resetAuthentication() {
         accessToken = null
-        PropertiesHelper.clearProperty("token")
-        PropertiesHelper.clearProperty("rawResponse")
-        PropertiesHelper.clearProperty("accessToken")
     }
 }

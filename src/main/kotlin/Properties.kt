@@ -1,7 +1,7 @@
 import java.util.prefs.Preferences
 
 //TODO rename
-object PropertiesHelper {
+internal object PreferenceHelper {
     private val preferences = Preferences.userNodeForPackage(this::class.java)
 
     fun getProperty(key: String): String? = preferences.get(key, null)

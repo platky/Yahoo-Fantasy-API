@@ -8,4 +8,9 @@ data class AuthorizationResult(val url: String) : AuthenticationResult {
         get() = 0
 }
 
-data class CodedAuthenticationResult(override val code: Int, val message: String) : AuthenticationResult
+data class CodedAuthenticationResult(
+        override val code: Int,
+        val message: String,
+        val accessToken: String,
+        val refreshToken: String
+) : AuthenticationResult

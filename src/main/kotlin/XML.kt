@@ -2,6 +2,7 @@ const val YAHOO_DATE_FORMAT = "yyyy-MM-dd"
 
 fun String.getXMLValue(key: String): String {
     val after = this.substringAfter(key.xmlKeyify())
+    if (this == after) return ""
     return after.substringBefore(key.xmlKeyifyNegated())
 }
 
