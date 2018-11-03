@@ -43,6 +43,7 @@ compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
 }
 
+/*
 jar {
     manifest {
         attributes 'Main-Class': 'io.github.platky.Yahoo Fantasy API.YahooFantasyKt'
@@ -51,4 +52,4 @@ jar {
     // and adds them to the JAR itself. One can extend this task, to skip certain
     // files or particular types at will
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
-}
+}*/
