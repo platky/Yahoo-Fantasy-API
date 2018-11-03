@@ -1,3 +1,5 @@
+package io.github.platky.YahooFantasyAPI
+
 const val YAHOO_DATE_FORMAT = "yyyy-MM-dd"
 
 fun String.getXMLValue(key: String): String {

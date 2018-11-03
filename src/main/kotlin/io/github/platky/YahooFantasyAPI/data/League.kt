@@ -1,11 +1,11 @@
-package data
+package io.github.platky.YahooFantasyAPI.data
 
-import OAuth
-import Requests
-import YAHOO_DATE_FORMAT
-import getListXMLValues
-import getXMLValue
-import yahooToBoolean
+import io.github.platky.YahooFantasyAPI.OAuth
+import io.github.platky.YahooFantasyAPI.Requests
+import io.github.platky.YahooFantasyAPI.YAHOO_DATE_FORMAT
+import io.github.platky.YahooFantasyAPI.getListXMLValues
+import io.github.platky.YahooFantasyAPI.getXMLValue
+import io.github.platky.YahooFantasyAPI.yahooToBoolean
 import java.text.SimpleDateFormat
 import java.util.*
 

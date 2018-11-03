@@ -1,4 +1,6 @@
-import data.Sport
+package io.github.platky.YahooFantasyAPI
+
+import io.github.platky.YahooFantasyAPI.data.Sport
 
 object Requests {
     private const val ANONYMOUS_BASE = "https://fantasysports.yahooapis.com/fantasy/v2"

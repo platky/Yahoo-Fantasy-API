@@ -1,10 +1,10 @@
-package data
+package io.github.platky.YahooFantasyAPI.data
 
-import OAuth
-import Requests
-import getListXMLValues
-import getXMLValue
-import yahooToBoolean
+import io.github.platky.YahooFantasyAPI.OAuth
+import io.github.platky.YahooFantasyAPI.Requests
+import io.github.platky.YahooFantasyAPI.getListXMLValues
+import io.github.platky.YahooFantasyAPI.getXMLValue
+import io.github.platky.YahooFantasyAPI.yahooToBoolean
 
 enum class Sport(val code: String) {
     HOCKEY("nhl")

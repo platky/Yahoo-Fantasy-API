@@ -1,4 +1,6 @@
-import data.*
+package io.github.platky.YahooFantasyAPI
+
+import io.github.platky.YahooFantasyAPI.data.*
 
 class YahooFantasy(apiKey: String, apiSecret: String) {
     private val oAuth = OAuth(apiKey, apiSecret)
@@ -27,8 +29,9 @@ class YahooFantasy(apiKey: String, apiSecret: String) {
     fun getTransaction(transactionKey: String): Transaction = retrieveTransactions(oAuth, listOf(transactionKey))[0]
     fun getTransactions(transactionKeys: List<String>): List<Transaction> = retrieveTransactions(oAuth, transactionKeys)
 
-    fun startAuthentication(accessToken: String = "", refreshToken: String = "") =
-            oAuth.startAuthentication(accessToken, refreshToken)
-    fun sendUserAuthenticationToken(token: String) = oAuth.sendUserToken(token)
-    fun resetAuthentication() = oAuth.resetAuthentication()
+    fun startAuthentication() = oAuth.startAuthentication()
+    fun finishAuthentication(userToken: String) = oAuth.finishAuthentication(userToken)
+    fun refreshAccessToken(accessToken: String, refreshToken: String)
+            = oAuth.refreshAccessToken(accessToken, refreshToken)
+    fun setAccessToken(accessToken: String) = oAuth.setAccessToken(accessToken)
 }

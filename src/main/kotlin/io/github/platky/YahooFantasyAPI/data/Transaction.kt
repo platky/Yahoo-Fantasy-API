@@ -1,9 +1,9 @@
-package data
+package io.github.platky.YahooFantasyAPI.data
 
-import OAuth
-import Requests
-import getListXMLValues
-import getXMLValue
+import io.github.platky.YahooFantasyAPI.OAuth
+import io.github.platky.YahooFantasyAPI.Requests
+import io.github.platky.YahooFantasyAPI.getListXMLValues
+import io.github.platky.YahooFantasyAPI.getXMLValue
 
 data class Transaction(
         val key: String,
