@@ -56,3 +56,29 @@ internal fun retrieveLeaguesTeams(oAuth: OAuth, leagueKey: String): List<Team> {
     val response = oAuth.sendRequest(Requests.getTeamsFromLeague(leagueKey))
     return createTeamsFromXML(response.body.getListXMLValues("team"))
 }
+
+data class TeamPoints(
+        val coverageType: String, //ENUM
+        val season: Int,
+        val totalPoints: Int,
+        val rank: Int,
+        val playoffSeed: Int,
+        val wins: Int,
+        val losses: Int,
+        val ties: Int,
+        val percentage: Float
+)
+
+internal fun createTeamPointsFromXML(pointsXML: String, standingsXML: String): TeamPoints {
+    return TeamPoints(
+            pointsXML.getXMLValue("coverage_type"),
+            pointsXML.getXMLValue("season").toInt(),
+            pointsXML.getXMLValue("total").toInt(),
+            standingsXML.getXMLValue("rank").toInt(),
+            standingsXML.getXMLValue("playoff_seed").toInt(),
+            standingsXML.getXMLValue("wins").toInt(),
+            standingsXML.getXMLValue("losses").toInt(),
+            standingsXML.getXMLValue("ties").toInt(),
+            standingsXML.getXMLValue("percentage").toFloat()
+    )
+}

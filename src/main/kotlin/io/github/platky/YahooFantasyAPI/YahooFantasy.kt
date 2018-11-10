@@ -29,9 +29,16 @@ class YahooFantasy(apiKey: String, apiSecret: String) {
     fun getTransaction(transactionKey: String): Transaction = retrieveTransactions(oAuth, listOf(transactionKey))[0]
     fun getTransactions(transactionKeys: List<String>): List<Transaction> = retrieveTransactions(oAuth, transactionKeys)
 
+    fun getLeaguesScoreboard(leagueKey: String, week: Int? = null): Scoreboard = retrieveScoreboard(oAuth, leagueKey, week)
+    fun getLeagueStandings(leagueKey: String): Standings = retrieveStandings(oAuth, leagueKey)
+
     fun startAuthentication() = oAuth.startAuthentication()
     fun finishAuthentication(userToken: String) = oAuth.finishAuthentication(userToken)
     fun refreshAccessToken(accessToken: String, refreshToken: String)
             = oAuth.refreshAccessToken(accessToken, refreshToken)
     fun setAccessToken(accessToken: String) = oAuth.setAccessToken(accessToken)
+
+
+
+    fun getStats() = println(oAuth.sendRequest("https://fantasysports.yahooapis.com/fantasy/v2/game/nhl/stat_categories").body)
 }

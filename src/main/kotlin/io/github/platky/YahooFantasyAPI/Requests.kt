@@ -28,5 +28,15 @@ object Requests {
     fun getTransactions(transactionKeys: List<String>) =
             "$ANONYMOUS_BASE/transactions;transaction_keys=${transactionKeys.combine()}"
 
+    fun getScoreboardFromLeague(leagueKey: String, week: Int?): String {
+        val weekParameter = when(week) {
+            null -> ""
+            else -> ";week=$week"
+        }
+        return "$ANONYMOUS_BASE/league/$leagueKey/scoreboard$weekParameter"
+    }
+
+    fun getStandingsFromLeague(leagueKey: String) = "$ANONYMOUS_BASE/league/$leagueKey/standings"
+
     private fun List<String>.combine() = this.joinToString(",")
 }
