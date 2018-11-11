@@ -39,6 +39,6 @@ class YahooFantasy(apiKey: String, apiSecret: String) {
     fun setAccessToken(accessToken: String) = oAuth.setAccessToken(accessToken)
 
 
-
-    fun getStats() = println(oAuth.sendRequest("https://fantasysports.yahooapis.com/fantasy/v2/game/nhl/stat_categories").body)
+    //TODO remove once all stats are gathered
+    internal fun getStats() = println(oAuth.sendRequest("https://fantasysports.yahooapis.com/fantasy/v2/game/nhl/stat_categories").body)
 }
