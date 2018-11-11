@@ -32,9 +32,9 @@ internal class OAuth(private val apiKey: String, private val apiSecret: String) 
         return authenticate(localAccess)
     }
 
-    internal fun refreshAccessToken(accessToken: String, refreshToken: String): AccessToken {
-        val localAccess = OAuth2AccessToken(accessToken, "", 3600, refreshToken, "", "")
-        return authenticate(localAccess)
+    internal fun refreshAccessToken(refreshToken: String): AccessToken {
+        val result = service.refreshAccessToken(refreshToken)
+        return AccessToken(result.accessToken, result.refreshToken, result.expiresIn)
     }
 
     private fun authenticate(accessToken: OAuth2AccessToken): AccessToken {

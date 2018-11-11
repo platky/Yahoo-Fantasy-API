@@ -34,8 +34,7 @@ class YahooFantasy(apiKey: String, apiSecret: String) {
 
     fun startAuthentication() = oAuth.startAuthentication()
     fun finishAuthentication(userToken: String) = oAuth.finishAuthentication(userToken)
-    fun refreshAccessToken(accessToken: String, refreshToken: String)
-            = oAuth.refreshAccessToken(accessToken, refreshToken)
+    fun refreshAccessToken(refreshToken: String) = oAuth.refreshAccessToken(refreshToken)
     fun setAccessToken(accessToken: String) = oAuth.setAccessToken(accessToken)
 
 
