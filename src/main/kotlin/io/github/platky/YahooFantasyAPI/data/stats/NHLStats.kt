@@ -1,13 +1,16 @@
 package io.github.platky.YahooFantasyAPI.data.stats
 
 import io.github.platky.YahooFantasyAPI.data.stats.Position.*
+import io.github.platky.YahooFantasyAPI.data.stats.StatOrder.HIGHER
+import io.github.platky.YahooFantasyAPI.data.stats.StatOrder.LOWER
 
 
 enum class NHLStat(
         override val id: Int,
         override val statName: String,
         override val displayName: String,
-        override val positions: List<Position>
+        override val positions: List<Position>,
+        override val order: StatOrder = HIGHER
 ) : StatCategories{
 
     GAMES_PLAYED(0, "Games Played", "GP", listOf(Player, Goalie)),
@@ -27,13 +30,13 @@ enum class NHLStat(
     SHOTS_ON_GOAL(14, "Shots on Goal", "SOG", listOf(Player)),
     SHOOTING_PERCENTAGE(15, "Shooting Percentage", "SH%", listOf(Player)),
     FACEOFFS_WON(16, "Faceoffs Won", "FW", listOf(Player)),
-    FACEOFFS_LOST(17, "Faceoffs Lost", "FL", listOf(Player)),
+    FACEOFFS_LOST(17, "Faceoffs Lost", "FL", listOf(Player)), //TODO lower?
     GAMES_STARTED(18, "Games Started", "GS", listOf(Goalie)),
     WINS(19, "Wins", "W", listOf(Goalie)),
-    LOSSES(20, "Losses", "L", listOf(Goalie)),
-    TIES(21, "Ties", "T", listOf(Goalie)),
-    GOALS_AGAINST(22, "Goals Against", "GA", listOf(Goalie)),
-    GOALS_AGAINST_AVERAGE(23, "Goals Against Average", "GAA", listOf(Goalie)),
+    LOSSES(20, "Losses", "L", listOf(Goalie), LOWER), //TODO lower?
+    TIES(21, "Ties", "T", listOf(Goalie)), //TODO lower?
+    GOALS_AGAINST(22, "Goals Against", "GA", listOf(Goalie), LOWER),
+    GOALS_AGAINST_AVERAGE(23, "Goals Against Average", "GAA", listOf(Goalie), LOWER),
     SHOTS_AGAINST(24, "Shots Against", "SA", listOf(Goalie)),
     SAVES(25, "Saves", "SV", listOf(Goalie)),
     SAVE_PERCENTAGE(26, "Save Percentage", "SV%", listOf(Goalie)),

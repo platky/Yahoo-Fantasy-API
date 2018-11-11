@@ -14,4 +14,10 @@ interface StatCategories {
     val statName: String
     val displayName: String
     val positions: List<Position>
+    val order: StatOrder
+}
+
+enum class StatOrder {
+    HIGHER,
+    LOWER
 }
