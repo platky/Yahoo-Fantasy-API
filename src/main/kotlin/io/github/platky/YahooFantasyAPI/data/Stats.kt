@@ -8,7 +8,7 @@ import io.github.platky.YahooFantasyAPI.getXMLValue
 data class Stat(
         val id: Int,
         val stat: StatCategories,
-        val value: Float
+        val value: Float?
 )
 
 internal fun createStatsFromXML(xmlBlocks: List<String>): List<Stat> {
@@ -20,7 +20,7 @@ internal fun createStatFromXML(xml: String): Stat {
     return Stat(
             id,
             getStatById(id),
-            xml.getXMLValue("value").toFloat()
+            xml.getXMLValue("value", null)?.toFloat()
     )
 }
 
