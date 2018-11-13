@@ -28,13 +28,23 @@ enum class LeagueType(val yahooName: String) {
     }
 }
 
+enum class DraftStatus(val yahooName: String) {
+    PRE_DRAFT("predraft"),
+    POST_DRAFT("postdraft");
+
+    companion object {
+        private val map = DraftStatus.values().associateBy(DraftStatus::yahooName)
+        fun fromName(name: String): DraftStatus = map[name] ?: POST_DRAFT //TODO dont default
+    }
+}
+
 data class League(
         val key: String,
         val id: Int,
         val name: String,
         val url: String,
         val logoUrl: String,
-        val draftStatus: String, //TODO use enum once values are known
+        val draftStatus: DraftStatus,
         val numOfTeams: Int,
         val editKey: Date,
         val weeklyDeadline: String, //TODO enum?
@@ -62,7 +72,7 @@ internal fun createLeagueFromXML(xml: String): League {
             xml.getXMLValue("name"),
             xml.getXMLValue("url"),
             xml.getXMLValue("logo_url"),
-            xml.getXMLValue("draft_status"),
+            DraftStatus.fromName(xml.getXMLValue("draft_status")),
             xml.getXMLValue("num_teams").toInt(),
             SimpleDateFormat(YAHOO_DATE_FORMAT).parse(xml.getXMLValue("edit_key")),
             xml.getXMLValue("weekly_deadline"),
