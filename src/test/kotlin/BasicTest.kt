@@ -22,4 +22,11 @@ class BasicTest : TestBase() {
         assertTrue(leagues.isNotEmpty())
         val standings = yahooFantasy.getLeagueStandings(leagues[0].key)
     }
+
+    @Test
+    fun getSettings() {
+        val leagues = yahooFantasy.getUsersLeagues()
+        assertTrue(leagues.isNotEmpty())
+        val settings = yahooFantasy.getLeagueSettings(leagues[0].key)
+    }
 }

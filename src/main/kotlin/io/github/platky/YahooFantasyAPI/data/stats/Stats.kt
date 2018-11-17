@@ -3,13 +3,13 @@ package io.github.platky.YahooFantasyAPI.data.stats
 import io.github.platky.YahooFantasyAPI.data.Sport
 
 
-internal fun getStatById(id: Int, sport: Sport = Sport.HOCKEY): StatCategories  {
+internal fun getStatById(id: Int, sport: Sport = Sport.HOCKEY): StatCategory  {
     return when(sport) {
-        Sport.HOCKEY -> NHLStat.fromId(id) ?: throw IllegalArgumentException("StatCategories not found")
+        Sport.HOCKEY -> NHLStat.fromId(id) ?: throw IllegalArgumentException("StatCategory not found")
     }
 }
 
-interface StatCategories {
+interface StatCategory {
     val id: Int
     val statName: String
     val displayName: String

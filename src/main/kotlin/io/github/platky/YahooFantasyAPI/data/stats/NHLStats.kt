@@ -11,7 +11,7 @@ enum class NHLStat(
         override val displayName: String,
         override val positions: List<Position>,
         override val order: StatOrder = HIGHER
-) : StatCategories{
+) : StatCategory{
 
     GAMES_PLAYED(0, "Games Played", "GP", listOf(Player, Goalie)),
     GOALS(1, "Goals", "G", listOf(Player)),

@@ -1,13 +1,13 @@
 package io.github.platky.YahooFantasyAPI.data
 
-import io.github.platky.YahooFantasyAPI.data.stats.StatCategories
+import io.github.platky.YahooFantasyAPI.data.stats.StatCategory
 import io.github.platky.YahooFantasyAPI.data.stats.getStatById
 import io.github.platky.YahooFantasyAPI.getListXMLValues
 import io.github.platky.YahooFantasyAPI.getXMLValue
 
 data class Stat(
         val id: Int,
-        val stat: StatCategories,
+        val stat: StatCategory,
         val value: Float?
 )
 

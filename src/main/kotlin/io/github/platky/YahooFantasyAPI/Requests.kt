@@ -37,6 +37,7 @@ object Requests {
     }
 
     fun getStandingsFromLeague(leagueKey: String) = "$ANONYMOUS_BASE/league/$leagueKey/standings"
+    fun getSettingsFromLeague(leagueKey: String) = "$ANONYMOUS_BASE/league/$leagueKey/settings"
 
     private fun List<String>.combine() = this.joinToString(",")
 }

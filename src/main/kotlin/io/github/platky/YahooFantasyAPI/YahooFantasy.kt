@@ -1,6 +1,7 @@
 package io.github.platky.YahooFantasyAPI
 
 import io.github.platky.YahooFantasyAPI.data.*
+import io.github.platky.YahooFantasyAPI.data.settings.retrieveLeagueSettings
 
 class YahooFantasy(apiKey: String, apiSecret: String) {
     private val oAuth = OAuth(apiKey, apiSecret)
@@ -31,6 +32,7 @@ class YahooFantasy(apiKey: String, apiSecret: String) {
 
     fun getLeaguesScoreboard(leagueKey: String, week: Int? = null): Scoreboard = retrieveScoreboard(oAuth, leagueKey, week)
     fun getLeagueStandings(leagueKey: String): Standings = retrieveStandings(oAuth, leagueKey)
+    //fun getLeagueSettings(leagueKey: String):
 
     fun startAuthentication() = oAuth.startAuthentication()
     fun finishAuthentication(userToken: String) = oAuth.finishAuthentication(userToken)
@@ -40,4 +42,5 @@ class YahooFantasy(apiKey: String, apiSecret: String) {
 
     //TODO remove once all stats are gathered
     internal fun getStats() = println(oAuth.sendRequest("https://fantasysports.yahooapis.com/fantasy/v2/game/nhl/stat_categories").body)
+    internal fun getLeagueSettings(leagueKey: String) = retrieveLeagueSettings(oAuth, leagueKey)
 }

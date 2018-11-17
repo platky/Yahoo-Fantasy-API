@@ -44,13 +44,21 @@ compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
 }
 
-/*
 jar {
     manifest {
-        attributes 'Main-Class': 'io.github.platky.Yahoo Fantasy API.YahooFantasyKt'
+        attributes 'Main-Class': 'io.github.platky.YahooFantasyAPI.YahooFantasyKt'
     }
     // This line of code recursively collects and copies all of a project's files
     // and adds them to the JAR itself. One can extend this task, to skip certain
     // files or particular types at will
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
-}*/
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives sourcesJar
+}
