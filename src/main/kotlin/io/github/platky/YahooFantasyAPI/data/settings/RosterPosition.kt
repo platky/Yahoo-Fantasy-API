@@ -30,6 +30,7 @@ enum class PositionType(override val yahooName: String) : YahooEnum {
     }
 }
 
+//TODO there is a duplication of this
 data class RosterPosition(
         val position: Position,
         val type: PositionType?,

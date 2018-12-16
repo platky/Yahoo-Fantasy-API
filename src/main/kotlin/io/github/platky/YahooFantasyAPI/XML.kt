@@ -1,5 +1,8 @@
 package io.github.platky.YahooFantasyAPI
 
+import java.text.SimpleDateFormat
+import java.util.*
+
 const val YAHOO_DATE_FORMAT = "yyyy-MM-dd"
 
 fun String.getXMLValue(key: String): String {
@@ -25,3 +28,8 @@ private fun String.xmlKeyify() = "<$this>"
 private fun String.xmlKeyifyNegated() = "</$this>"
 
 fun String.yahooToBoolean() = this.toBoolean() || this == "1"
+
+fun String?.yahooToDate(): Date? {
+    if (this.isNullOrBlank()) return null
+    return SimpleDateFormat(YAHOO_DATE_FORMAT).parse(this)
+}

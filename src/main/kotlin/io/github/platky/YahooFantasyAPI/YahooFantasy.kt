@@ -42,5 +42,5 @@ class YahooFantasy(apiKey: String, apiSecret: String) {
 
     //TODO remove once all stats are gathered
     internal fun getStats() = println(oAuth.sendRequest("https://fantasysports.yahooapis.com/fantasy/v2/game/nhl/stat_categories").body)
-    internal fun getLeagueSettings(leagueKey: String) = retrieveLeagueSettings(oAuth, leagueKey)
+    fun getLeagueSettings(leagueKey: String) = retrieveLeagueSettings(oAuth, leagueKey)
 }

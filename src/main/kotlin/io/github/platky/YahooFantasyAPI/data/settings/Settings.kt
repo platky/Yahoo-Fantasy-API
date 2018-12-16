@@ -43,7 +43,7 @@ data class Settings(
         val numberOfPlayoffConsolationTeams: Int,
         val hasMultiWeekChampionship: Boolean,
         val usesRosterImport: Boolean,
-        val rosterImportDeadline: Date,
+        val rosterImportDeadline: Date?,
         val waiverType: String, //switch to enum
         val waiverRule: String, //enum
         val usesFaab: Boolean,
@@ -66,7 +66,6 @@ data class Settings(
 )
 
 fun createSettingsFromXML(xml: String): Settings {
-    println(xml)
     return Settings(
             DraftType.fromName(xml.getXMLValue("draft_type")),
             xml.getXMLValue("is_auction_draft").yahooToBoolean(),
@@ -81,7 +80,7 @@ fun createSettingsFromXML(xml: String): Settings {
             xml.getXMLValue("num_playoff_consolation_teams").toInt(),
             xml.getXMLValue("has_multiweek_championship").yahooToBoolean(),
             xml.getXMLValue("uses_roster_import").yahooToBoolean(),
-            SimpleDateFormat(YAHOO_DATE_FORMAT).parse(xml.getXMLValue("roster_import_deadline")),
+            xml.getXMLValue("roster_import_deadline").yahooToDate(),
             xml.getXMLValue("waiver_type"),
             xml.getXMLValue("waiver_rule"),
             xml.getXMLValue("uses_faab").yahooToBoolean(),
